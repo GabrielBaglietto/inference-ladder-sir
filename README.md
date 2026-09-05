@@ -8,7 +8,8 @@ has to earn its place by answering a question the previous one could not. On top
 foundation, three distinct ways of inserting machine learning into a mechanistic model are
 compared against it.
 
-> **Status:** scaffolding. The ladder itself is not built yet.
+> **Status:** the mechanistic core is in place — SIR dynamics, observation models and
+> seeded synthetic data. The rungs themselves are not built yet.
 
 ## Install
 
