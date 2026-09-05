@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Data: never committed (see data/README.md)
+data/*
+!data/README.md
+
+# OS / editors
+.DS_Store
