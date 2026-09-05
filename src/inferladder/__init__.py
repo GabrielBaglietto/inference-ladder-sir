@@ -5,7 +5,7 @@ from inferladder.models.base import GenerativeModel, ObservationModel, SystemMod
 from inferladder.models.sir import SIR
 from inferladder.observation import NegativeBinomialReporting, PoissonReporting
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     "SIR",
