@@ -8,8 +8,8 @@ has to earn its place by answering a question the previous one could not. On top
 foundation, three distinct ways of inserting machine learning into a mechanistic model are
 compared against it.
 
-> **Status:** the mechanistic core is in place — SIR dynamics, observation models and
-> seeded synthetic data. The rungs themselves are not built yet.
+> **Status:** rungs 0–4 are built — from a log-linear growth rate to intervals from three
+> different methods. The Bayesian rung and the machine-learning insertions are next.
 
 ## Install
 
@@ -37,6 +37,22 @@ notebooks/         # one notebook per rung
 report/            # narrative artifact
 data/              # gitignored, see data/README.md
 ```
+
+## The ladder so far
+
+Each rung answers a question the one below it could not, and each notebook closes by
+saying what it settles and when you would be right to stop there.
+
+| | question | method |
+|---|---|---|
+| `00` | how fast is it growing? | log-linear fit on the exponential phase |
+| `01` | what are the rates separately? | least squares vs. maximum likelihood |
+| `02` | is that really the optimum? | multistart, cost surface |
+| `03` | do the data determine the parameters? | sensitivity spectrum, profile likelihood |
+| `04` | how uncertain is the fit? | Laplace, profile and bootstrap intervals |
+
+Run them with `uv run jupyter lab notebooks/`, or execute them all with
+`uv run pytest --nbmake notebooks/`.
 
 ## License
 
