@@ -12,6 +12,7 @@ venv/
 
 # Notebooks
 .ipynb_checkpoints/
+notebooks/_rendered/
 
 # Data: never committed (see data/README.md)
 data/*

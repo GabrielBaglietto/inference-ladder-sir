@@ -51,8 +51,25 @@ saying what it settles and when you would be right to stop there.
 | `03` | do the data determine the parameters? | sensitivity spectrum, profile likelihood |
 | `04` | how uncertain is the fit? | Laplace, profile and bootstrap intervals |
 
-Run them with `uv run jupyter lab notebooks/`, or execute them all with
-`uv run pytest --nbmake notebooks/`.
+Notebooks are stored **without outputs**, so they arrive as empty cells and have to be
+run. Three ways, depending on what you want:
+
+```bash
+# execute all of them and check they still work (no output kept)
+uv run pytest --nbmake notebooks/
+
+# render them to standalone HTML you can open in a browser
+uv sync --group notebooks
+uv run jupyter nbconvert --execute --to html notebooks/*.ipynb --output-dir notebooks/_rendered
+
+# work on them interactively
+uv sync --group notebooks
+uv run jupyter lab
+```
+
+JupyterLab lives in its own `notebooks` dependency group, so a plain `uv sync` stays
+small and CI never installs it. Executing the full set takes roughly three minutes,
+most of it the bootstrap in rung 4.
 
 ## License
 
