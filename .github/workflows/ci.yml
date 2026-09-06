@@ -17,7 +17,9 @@ jobs:
           enable-cache: true
 
       - name: Sync dependencies
-        run: uv sync --all-groups
+        # Not --all-groups: the `notebooks` group carries JupyterLab, which CI never
+        # needs. `dev` is installed by default and holds the lint/test/nbmake tooling.
+        run: uv sync
 
       - name: Lint
         run: uv run ruff check .
