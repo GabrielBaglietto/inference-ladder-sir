@@ -8,8 +8,8 @@ has to earn its place by answering a question the previous one could not. On top
 foundation, three distinct ways of inserting machine learning into a mechanistic model are
 compared against it.
 
-> **Status:** rungs 0–4 are built — from a log-linear growth rate to intervals from three
-> different methods. The Bayesian rung and the machine-learning insertions are next.
+> **Status:** the mechanistic ladder is complete, rungs 0–5 — from a log-linear growth
+> rate to a joint posterior. The machine-learning insertions are next.
 
 ## Install
 
@@ -50,12 +50,14 @@ saying what it settles and when you would be right to stop there.
 | `02` | is that really the optimum? | multistart, cost surface |
 | `03` | do the data determine the parameters? | sensitivity spectrum, profile likelihood |
 | `04` | how uncertain is the fit? | Laplace, profile and bootstrap intervals |
+| `05` | what can we decide? | posterior sampling, priors, a decision curve |
 
 Notebooks are stored **without outputs**, so they arrive as empty cells and have to be
 run. Three ways, depending on what you want:
 
 ```bash
 # execute all of them and check they still work (no output kept)
+uv sync --group bayes          # notebook 05 samples a posterior
 uv run pytest --nbmake notebooks/
 
 # render them to standalone HTML you can open in a browser

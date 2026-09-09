@@ -23,6 +23,10 @@ path = "src/inferladder/__init__.py"
 packages = ["src/inferladder"]
 
 [dependency-groups]
+bayes = [
+    "arviz>=0.23.4",
+    "pymc>=5.28.5",
+]
 dev = [
     "mypy>=1.11",
     "nbmake>=1.5",

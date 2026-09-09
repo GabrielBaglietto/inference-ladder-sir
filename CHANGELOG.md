@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3] - 2026-09-09
+
+### Added
+
+- `inference.bayes`: the SIR likelihood wrapped as a black-box PyTensor operation, stated
+  priors, posterior sampling and a convergence report that is checked before the numbers
+  are read. PyMC and ArviZ live in an optional `bayes` dependency group.
+- Notebook `05`: the reference posterior, its agreement with Laplace, and a decision curve
+  obtained by pushing the joint posterior through a policy question.
+
+### Notes
+
+- **Not NUTS.** NUTS needs the gradient of the log-posterior, and the dynamics are
+  integrated by `scipy`, which automatic differentiation cannot see through. Supplying
+  gradients would mean a second implementation of the same model in a differentiable
+  framework, which is the drift the model-agnostic design exists to prevent. The sampler
+  is `DEMetropolisZ`, which learns proposal directions from the chain's own history.
+- That choice is not free, and notebook 05 shows the cost: a componentwise Metropolis on
+  the same posterior retains an effective sample size in the single digits out of 3200
+  draws, because `beta` and `gamma` correlate at 0.99. The sloppiness diagnosed at rung 3
+  breaks samplers that ignore it.
+- Laplace and the posterior agree closely on `beta`, `gamma` and `rho`. The reason to
+  climb this rung is the joint distribution and the priors, not tighter intervals.
+
 ## [0.2] - 2026-09-05
 
 ### Added
