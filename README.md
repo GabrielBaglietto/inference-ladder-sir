@@ -1,15 +1,63 @@
-# inference-ladder
+# The inference ladder on SIR
 
-Climbing the inference ladder on one mechanistic model.
+Six rungs on the same mechanistic model, in increasing order of cost, where each one is on
+the ladder because it answers a question the one below it could not — and each one closes
+by saying what it settles, what it does not, and when you would be right to stop there.
 
-A single SIR/COVID model is fitted again and again, each time with a method one step
-stronger than the last — from a log-linear slope to a full posterior — and every step
-has to earn its place by answering a question the previous one could not. On top of that
-foundation, three distinct ways of inserting machine learning into a mechanistic model are
-compared against it.
+The model is a deterministic SIR with an explicit observation model (under-reporting,
+Poisson or negative-binomial counts). The data are synthetic with known ground truth, so
+every rung can be checked against the answer instead of argued about.
 
-> **Status:** the mechanistic ladder is complete, rungs 0–5 — from a log-linear growth
-> rate to a joint posterior. The machine-learning insertions are next.
+> **Status:** complete as a study of rungs 0–5. No further rungs are planned here.
+
+## What the climb actually found
+
+Three results worth more than the code, and two of them are negative.
+
+**The optimisation difficulty rung 2 exists to demonstrate does not occur on this model.**
+The likelihood over a complete epidemic has a single optimum and twelve independent
+searches find it. The notebook reports that instead of manufacturing a harder problem.
+The flat valley it does find is handed to rung 3, where it belongs.
+
+**Identifiability depends on the observation window, which is the opposite of the usual
+shorthand.** Over a complete epidemic both rates and `R0` are determined. Over the
+exponential phase alone only `beta - gamma` is, and `R0` is unbounded — so the quantity
+normally described as the rigid one is the one the early data cannot pin down.
+
+**Sloppiness diagnosed at rung 3 breaks the samplers that ignore it.** `beta` and `gamma`
+correlate at 0.99 in the posterior. A componentwise Metropolis on that posterior retains
+an effective sample size in the single digits out of 3200 draws; a sampler that learns
+proposal directions from the chain's own history gets ~570 in a quarter of the time. And
+because Laplace and the posterior agree closely on the marginals, the reason to climb to
+rung 5 is the joint distribution and the priors — not tighter intervals.
+
+## The rungs
+
+| | question | method |
+|---|---|---|
+| `00` | how fast is it growing? | log-linear fit on the exponential phase |
+| `01` | what are the rates separately? | least squares vs. maximum likelihood |
+| `02` | is that really the optimum? | multistart, cost surfaces |
+| `03` | do the data determine the parameters? | sensitivity spectrum, observed Fisher, profile likelihood |
+| `04` | how uncertain is the fit? | Laplace, profile and bootstrap intervals |
+| `05` | what can we decide? | posterior sampling, stated priors, a decision curve |
+
+Rung 5 is not NUTS. NUTS needs the gradient of the log-posterior, and the dynamics are
+integrated by `scipy`, which automatic differentiation cannot see through. Supplying
+gradients would mean a second implementation of the same model in a differentiable
+framework — the drift the model-agnostic design exists to prevent. The sampler is
+`DEMetropolisZ`, and notebook 05 measures what that choice costs.
+
+## On prior art
+
+Implementations of these methods on SIR already exist, and `sir-julia` is the broadest of
+them: it covers more formalisms than this repository does, and anyone comparing the two on
+coverage should prefer it.
+
+What a catalogue of recipes cannot have is the chain — each method appearing because the
+previous one failed for a stated reason, the failures reported rather than smoothed over,
+and every rung declaring its own stopping criterion. That chain is what this repository
+is, and it is the only thing it claims.
 
 ## Install
 
@@ -34,23 +82,14 @@ uv run pre-commit install  # enable hooks
 src/inferladder/   # the package
 tests/             # pytest, mirrors src/
 notebooks/         # one notebook per rung
-report/            # narrative artifact
 data/              # gitignored, see data/README.md
 ```
 
-## The ladder so far
+The package is split so that no rung knows which model it is running on:
+`models/base` defines the `SystemModel` / `ObservationModel` split and the
+`GenerativeModel` that composes them, and every inference module takes that interface.
 
-Each rung answers a question the one below it could not, and each notebook closes by
-saying what it settles and when you would be right to stop there.
-
-| | question | method |
-|---|---|---|
-| `00` | how fast is it growing? | log-linear fit on the exponential phase |
-| `01` | what are the rates separately? | least squares vs. maximum likelihood |
-| `02` | is that really the optimum? | multistart, cost surface |
-| `03` | do the data determine the parameters? | sensitivity spectrum, profile likelihood |
-| `04` | how uncertain is the fit? | Laplace, profile and bootstrap intervals |
-| `05` | what can we decide? | posterior sampling, priors, a decision curve |
+## Running the notebooks
 
 Notebooks are stored **without outputs**, so they arrive as empty cells and have to be
 run. Three ways, depending on what you want:
@@ -70,8 +109,9 @@ uv run jupyter lab
 ```
 
 JupyterLab lives in its own `notebooks` dependency group, so a plain `uv sync` stays
-small and CI never installs it. Executing the full set takes roughly three minutes,
-most of it the bootstrap in rung 4.
+small. Executing the full set takes about twelve minutes on a laptop, nearly all of it the
+bootstrap in rung 4 and the posterior sampling in rung 5. Seeds are fixed throughout: the
+numbers in the text are the numbers you get.
 
 ## License
 

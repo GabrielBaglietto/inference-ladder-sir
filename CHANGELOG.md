@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- README rewritten for publication: it now leads with what the climb found — including the
+  two negative results — and states what the repository claims and what it does not. The
+  previous version announced machine-learning insertions as coming next; they are not part
+  of this repository, and the promise is removed rather than left standing.
+
+### Fixed
+
+- CI installs the `bayes` dependency group. Without it the notebook smoke test would fail
+  on notebook 05, which imports `inference.bayes` at module level, and `tests/test_bayes.py`
+  would silently skip instead of running. CI had never executed before publication, so this
+  was latent rather than observed.
+
+### Removed
+
+- The README described a `report/` directory that does not exist.
+
 ## [0.3] - 2026-09-09
 
 ### Added
