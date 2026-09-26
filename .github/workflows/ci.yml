@@ -19,7 +19,10 @@ jobs:
       - name: Sync dependencies
         # Not --all-groups: the `notebooks` group carries JupyterLab, which CI never
         # needs. `dev` is installed by default and holds the lint/test/nbmake tooling.
-        run: uv sync
+        # `bayes` is explicit: notebook 05 imports `inference.bayes`, which imports PyMC
+        # at module level, and without it the notebook smoke test fails and test_bayes.py
+        # silently skips instead of running.
+        run: uv sync --group bayes
 
       - name: Lint
         run: uv run ruff check .
