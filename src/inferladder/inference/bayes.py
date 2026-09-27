@@ -210,8 +210,8 @@ def check_convergence(idata: xr.DataTree, var_names: list[str] | None = None) ->
 def posterior_samples(idata: xr.DataTree, param_names: tuple[str, ...]) -> FloatArray:
     """Flatten the posterior into a ``(n_draws, n_params)`` array.
 
-    The bridge to everything else: rung 4's bootstrap replicates and rung 6's neural
-    posterior samples have the same shape, so they can be compared with one code path.
+    The bridge between rungs: these draws and rung 4's bootstrap replicates have the
+    same shape, so one code path compares them -- and so would any other sampler's.
     """
     posterior = idata.posterior
     columns = [posterior[name].to_numpy().reshape(-1) for name in param_names]

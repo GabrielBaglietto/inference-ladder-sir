@@ -1,6 +1,6 @@
 """Deterministic SIR model.
 
-The compartmental core of the showcase. Three states plus a cumulative-incidence
+The compartmental core every rung runs on. Three states plus a cumulative-incidence
 accumulator ``C``, which exists purely so that incidence can be read off exactly as
 ``C(t_i) - C(t_i-1)`` instead of being approximated from ``I``. That distinction
 matters: ``I`` is prevalence (how many are infectious now), while case counts are
