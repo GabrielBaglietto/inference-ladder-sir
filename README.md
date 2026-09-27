@@ -14,22 +14,24 @@ every rung can be checked against the answer instead of argued about.
 
 Three results worth more than the code, and two of them are negative.
 
-**The optimisation difficulty rung 2 exists to demonstrate does not occur on this model.**
-The likelihood over a complete epidemic has a single optimum and twelve independent
-searches find it. The notebook reports that instead of manufacturing a harder problem.
-The flat valley it does find is handed to rung 3, where it belongs.
+**The optimisation difficulty the climb was supposed to run into never appears.** Over a
+complete epidemic the likelihood has a single optimum, and twelve independent searches from
+different starting points all find it. The notebook says so rather than manufacturing a
+harder problem to fit the narrative. What the searches *do* find is a long flat valley — and
+a flat valley is not an optimiser's problem, so it is handed on to the rung that asks
+whether the data determine the parameters at all.
 
-**Identifiability depends on the observation window, which is the opposite of the usual
-shorthand.** Over a complete epidemic both rates and `R0` are determined. Over the
+**Whether they do depends on the observation window, which is the opposite of the usual
+shorthand.** Over a complete epidemic both rates and `R0` are pinned down. Over the
 exponential phase alone only `beta - gamma` is, and `R0` is unbounded — so the quantity
-normally described as the rigid one is the one the early data cannot pin down.
+normally treated as the rigid one is precisely the one early data cannot fix.
 
-**Sloppiness diagnosed at rung 3 breaks the samplers that ignore it.** `beta` and `gamma`
-correlate at 0.99 in the posterior. A componentwise Metropolis on that posterior retains
-an effective sample size in the single digits out of 3200 draws; a sampler that learns
-proposal directions from the chain's own history gets ~570 in a quarter of the time. And
-because Laplace and the posterior agree closely on the marginals, the reason to climb to
-rung 5 is the joint distribution and the priors — not tighter intervals.
+**That same valley breaks the samplers that ignore it.** `beta` and `gamma` correlate at
+0.99 in the posterior. A componentwise Metropolis retains an effective sample size in the
+single digits out of 3200 draws; a sampler that learns proposal directions from the chain's
+own history gets around 570, in a quarter of the runtime. And since a Laplace approximation
+already agrees with the posterior on the marginals, the reason to sample at all is the joint
+distribution and the priors — not tighter intervals.
 
 ## The rungs
 
