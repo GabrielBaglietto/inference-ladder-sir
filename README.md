@@ -10,23 +10,22 @@ every rung can be checked against the answer instead of argued about.
 
 > **Status:** complete as a study of rungs 0–5. No further rungs are planned here.
 
-## What the climb actually found
+## What the climb found
 
-Three results worth more than the code, and two of them are negative.
+Three results, and they are the same geometry seen from three rungs.
 
-**The optimisation difficulty the climb was supposed to run into never appears.** Over a
-complete epidemic the likelihood has a single optimum, and twelve independent searches from
-different starting points all find it. The notebook says so rather than manufacturing a
-harder problem to fit the narrative. What the searches *do* find is a long flat valley — and
-a flat valley is not an optimiser's problem, so it is handed on to the rung that asks
-whether the data determine the parameters at all.
+**Over a complete epidemic the likelihood is well behaved, and that is not the good news it
+sounds like.** It has a single optimum, and twelve independent searches from different
+starting points all find it. What they also find is a long flat valley — and a flat valley
+is not an optimiser's problem. It is a question about whether the data determine the
+parameters at all.
 
 **Whether they do depends on the observation window, which is the opposite of the usual
 shorthand.** Over a complete epidemic both rates and `R0` are pinned down. Over the
 exponential phase alone only `beta - gamma` is, and `R0` is unbounded — so the quantity
 normally treated as the rigid one is precisely the one early data cannot fix.
 
-**That same valley breaks the samplers that ignore it.** `beta` and `gamma` correlate at
+**The valley is also what breaks samplers that ignore it.** `beta` and `gamma` correlate at
 0.99 in the posterior. A componentwise Metropolis retains an effective sample size in the
 single digits out of 3200 draws; a sampler that learns proposal directions from the chain's
 own history gets around 570, in a quarter of the runtime. And since a Laplace approximation

@@ -9,10 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- README rewritten for publication: it now leads with what the climb found — including the
-  two negative results — and states what the repository claims and what it does not. The
-  previous version announced machine-learning insertions as coming next; they are not part
-  of this repository, and the promise is removed rather than left standing.
+- README rewritten for publication: it now leads with what the climb found and states what
+  the repository claims and what it does not. The previous version announced
+  machine-learning insertions as coming next; they are not part of this repository, and the
+  promise is removed rather than left standing.
+- The findings are stated as claims about the model rather than as results against an
+  expectation. "The difficulty we expected did not appear" means nothing to a reader who
+  never held the expectation, and reads as an apology for something missing; the substance
+  — one optimum, a flat valley, and a valley that is an identifiability problem rather than
+  an optimiser's — needs no such framing. The three findings are the same geometry seen
+  from three rungs, and the text now says so.
 
 ### Fixed
 
